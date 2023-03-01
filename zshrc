@@ -11,7 +11,7 @@ ZSH_THEME="avit"
 autoload -Uz compinit
 compinit
 
-plugins=(zsh-autosuggestions git pass autojump)
+plugins=(zsh-syntax-highlighting zsh-autosuggestions git pass autojump)
 
 export PATH="/home/pl/box/arch/bin:/home/pl/box/arch/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/home/pl/box/arch/.local/bin/:/home/pl/box/arch/.npm-global/bin/:/home/pl/box/arch/.xmonad/bin"
 
