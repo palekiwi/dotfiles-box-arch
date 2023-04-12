@@ -1,15 +1,65 @@
 #!/bin/sh
 
-yay-install () {
-  yay -Syu $@
+########################
+#        source        #
+########################
+
+alias sal="source ~/.aliases"  
+alias szsh="source ~/.aliases"  
+
+########################
+#       vagrant        #
+########################
+
+alias vu="vagrant up"
+alias vpr="vagrant provision"
+alias vst="vagrant status"
+alias vgst="vagrant global-status"
+alias vh="vagrant halt"
+alias vdf="vagrant destroy -f"
+alias vrr="vagrant destroy -f && vagrant up"  # reset and restart
+alias vbl="vagrant box list"
+
+alias vsshc="vagrant ssh-config"
+alias vssh="vagrant ssh"
+
+alias vssh1="vagrant ssh machine1"
+alias vssh2="vagrant ssh machine2"
+alias vssh3="vagrant ssh machine3"
+
+
+########################
+#       molecule       #
+########################
+run_molecule () {
+  if ! type "molecule" > /dev/null; then
+    source ~/Code/ansible/venv/molecule-venv-arch/bin/activate
+  fi
+  export SCNR=${scenario:='default'}
+  molecule "$@"
 }
 
-pacman-install () {
-  sudo pacman -Syu $@
-}
+alias molc="run_molecule converge -s '${SCNR}'"
+alias mold="run_molecule destroy -s '${SCNR}'"
+alias moll="run_molecule login -s '${SCNR}'"
+alias molir="run_molecule init role"
+alias molis="run_molecule init scenario"
+alias molt="run_molecule test"
+alias molvy="run_molecule verify"
+alias molrr="mold && molc"
+
+########################
+#       ansible        #
+########################
+
+alias ansi="ansible-inventory"
+alias ansp="ansible-playbook"
+alias ans="ansible"
+alias ansd="ansible-doc"
+alias angci="ansible-galaxy collection install"
 
 # commands=
-alias cat="bat"
+alias cat="bat -p"
 alias l="exa --group-directories-first"
 alias lt="exa -T -L 3 --group-directories-first"
 alias ltt="exa -l -T -L 2 --group-directories-first"
@@ -24,18 +74,13 @@ alias gu="gitui"
 alias vim="nvim"
 alias v="nvim"
 
-#system
-alias update-grub="sudo grub-mkconfig -o /boot/grub/grub.cfg"
-alias ukr="sudo pacman -S archlinux-keyring"
-alias restart="sudo shutdown -r now"
-alias sn="~/arch-scripts/scripts/shutdown-sequence.sh"
+########################
+#        pacman        #
+########################
 
-#packages
 alias spacs="pacman-install"
 alias pacs="pacman -Ss"
 alias syu="sudo pacman -Syu"
-alias syays="yay-install"
-alias yays="yay -Ss"
 
 # files
 alias link-dotfiles="sh $HOME/dotfiles/scripts/box.arch.link-dotfiles.sh"
@@ -63,7 +108,7 @@ git-clone-repo() {
 }
 
 git-clone-repo-dhammafarer() {
-  git clone git@github.com:dhammafarer/$1.git
+  git clone git@github.com:dhammafarer/$1.git $2
 }
 
 git-create-repo() {
@@ -88,6 +133,7 @@ git-create-init-repo() {
   git-add-remote
 }
 
+alias grr="rm -rf .git && git init"
 alias ga="git add"
 alias gaa="git add ."
 alias gc="git commit -m"
@@ -223,9 +269,6 @@ alias umkeys="sdblack-umount"
 
 alias mtmedia="sshfs ubuntu@klaasje.ddns.net:/mnt/external/media ~/mnt/media -C -p 437"
 alias mtphotos="sshfs ubuntu@klaasje.ddns.net:/mnt/external/data/photos ~/mnt/photos -C -p 437"
-
-alias slo="ykman otp calculate -T 1 | ctc"
-alias sdr="sudo systemctl daemon-reload"
 
 restart-pcscd () {
   sudo systemctl stop pcscd.socket

@@ -20,9 +20,9 @@ source $ZSH/oh-my-zsh.sh
 . ~/.aliases
 
 # ssh authentication with gpg
-export GPG_TTY="$(tty)"
-export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
-gpgconf --launch gpg-agent
+#export GPG_TTY="$(tty)"
+#export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+#gpgconf --launch gpg-agent
 
 export EDITOR=nvim
 
